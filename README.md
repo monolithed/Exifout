@@ -10,6 +10,7 @@ Exifout  [ --files ] | [ --path ] | [ --name ] | [ --options ] |
 ```
 
 ## Dependencies
+
 PNGOUT binary files that are located in pngout directory
 
 ## Installation
@@ -17,7 +18,7 @@ PNGOUT binary files that are located in pngout directory
 ```
 git clone git@github.com:monolithed/Exifout.git
 
-'''
+```
 
 ## Using
 
