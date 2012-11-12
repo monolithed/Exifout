@@ -43,7 +43,6 @@ Linux: x86-64
 Linux: Pentiun 4
 
 Darvin
-
 '''
 
 ## Links
