@@ -47,8 +47,10 @@ Darvin
 ```
 
 ## Links
-http://www.jonof.id.au/kenutils
-http://advsys.net/ken/utils.htm
+
+[Alexander Guinness] (Linux/BSD/Mac OS X ports of Ken Silverman's Utilities)
+[Alexander Guinness] (http://advsys.net/ken/utils.htm)
+
 
 ##.
 
