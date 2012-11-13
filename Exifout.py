@@ -7,7 +7,7 @@
 -          [--extensions ] | [platform] | [ machine ] | [ pngout ]
 -
 - @author Alexander Abashkin <monolithed@gmail.com>
-- @version 0.0.1
+- @version 0.0.2
 - @license: MIT
 - @date: Mon 12 04:33:00 2012
 '''
@@ -19,7 +19,6 @@ from re import sub as replace
 from configure import parser
 
 __all__ = ['Exifout']
-__version__ = '0.0.1'
 
 
 class Exifout:
@@ -37,10 +36,11 @@ class Exifout:
 			machine = [i for i in os.listdir(file) if ~i.find(self.options.machine[0])]
 
 			if machine:
-				if file.endswith('darwin'):
-					file = '%s/pngout' % file
-				else:
-					file = '%s/%s/pngout' % (file, machine[0])
+				file = '%s/%s/pngout' % (file, machine[0])
+
+			elif file.endswith('darwin'):
+				file = '%s/pngout' % file
+
 			else:
 				self.LOG_INFO('fail', 'The machine type could not be determined automatically!')
 				return 0
