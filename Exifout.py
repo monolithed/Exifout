@@ -3,16 +3,16 @@
 '''
 - Exifout - A simple wrapper around the PNGOUT library
 -
-- Exifout  [ --files ] | [ --path ] | [ --name ] | [ --options ] |
--          [--extensions ] | [platform] | [ machine ] | [ pngout ]
+- Exifout  --path | [ --files ] | [ --name ] | [ --options ] | [--extensions ] | [platform] | [ machine ] | [ pngout ]
 -
 - @author Alexander Abashkin <monolithed@gmail.com>
-- @version 0.0.2
+- @version 0.0.3
 - @license: MIT
 - @date: Mon 12 04:33:00 2012
 '''
 
 import os
+from itertools import tee
 from subprocess import call
 from datetime import datetime
 from re import sub as replace
@@ -26,6 +26,7 @@ class Exifout:
 		self.options = options
 		self.router()
 
+
 	def get_binary_file(self):
 		'''
 		This method provides a way to find the PNGOUT binary file
@@ -35,11 +36,11 @@ class Exifout:
 		try:
 			machine = [i for i in os.listdir(file) if ~i.find(self.options.machine[0])]
 
-			if machine:
-				file = '%s/%s/pngout' % (file, machine[0])
-
-			elif file.endswith('darwin'):
+			if file.endswith('darwin'):
 				file = '%s/pngout' % file
+
+			elif machine:
+				file = '%s/%s/pngout' % (file, machine[0])
 
 			else:
 				self.LOG_INFO('fail', 'The machine type could not be determined automatically!')
@@ -52,13 +53,6 @@ class Exifout:
 			return file
 
 
-	def get_folder_path(self):
-		'''
-		Get the target directory
-		'''
-		return os.walk(self.options.path[0])
-
-
 	def set_file_postfix(self, file, extension):
 		'''
 		Set the filename postfix
@@ -68,27 +62,32 @@ class Exifout:
 		return postfix and replace('.%s$' % extension, '%s.%s' % (postfix, extension), file)
 
 
+	def get_options(self):
+		return ' '.join('-' + option for option in self.options.options)
+
+
 	def execute(self, file, extension):
 		'''
 		Execute shell command
 		'''
-		options = ' '.join('-' + option for option in self.options.options)
 		binary  = self.get_binary_file()
 
 		if binary:
-			command = ' '.join([binary, options, file, self.set_file_postfix(file, extension)])
+			command = ' '.join([binary, self.get_options(), file, self.set_file_postfix(file, extension)])
 
-			self.LOG_INFO('ok', command)
-			call(command ,shell = True)
+			#self.LOG_INFO('ok', command)
+			call(command, shell = True)
 
 	def router(self):
 		'''
 		Finds files
 		'''
-		if not sum(1 for _ in self.get_folder_path()):
+		get_path, check_path = tee(os.walk(self.options.path[0]))
+
+		if not sum(1 for _ in check_path):
 			self.LOG_INFO('fail', 'Directory invalid or specified files not found!')
 
-		for root, dirs, files in self.get_folder_path():
+		for root, dirs, files in get_path:
 			for name in files:
 				image = os.path.join(root, name)
 

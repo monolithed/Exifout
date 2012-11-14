@@ -5,8 +5,7 @@ Exifout - A simple wrapper around the PNGOUT library
 ## Synopsis
 
 ```
-Exifout  [ --files ] | [ --path ] | [ --name ] | [ --options ] |
-         [--extensions ] | [platform] | [ machine ] | [ pngout ]
+Exifout  --path | [ --files ] | [ --name ] | [ --options ] | [--extensions ] | [platform] | [ machine ] | [ pngout ]
 ```
 
 ## Dependencies
