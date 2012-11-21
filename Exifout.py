@@ -12,7 +12,7 @@
 '''
 
 import os
-from itertools import tee
+import itertools
 from subprocess import call
 from datetime import datetime
 from re import sub as replace
@@ -24,6 +24,7 @@ __all__ = ['Exifout']
 class Exifout:
 	def __init__(self, options):
 		self.options = options
+		self.count = itertools.count()
 		self.router()
 
 
@@ -63,7 +64,7 @@ class Exifout:
 
 
 	def get_options(self):
-		return ' '.join('-' + option for option in self.options.options)
+		return ' '.join('-' + option for option in self.options.options if option)
 
 
 	def execute(self, file, extension):
@@ -75,14 +76,15 @@ class Exifout:
 		if binary:
 			command = ' '.join([binary, self.get_options(), file, self.set_file_postfix(file, extension)])
 
-			#self.LOG_INFO('ok', command)
+			self.LOG_INFO('ok', '[ %s ]' % next(self.count))
 			call(command, shell = True)
+
 
 	def router(self):
 		'''
 		Finds files
 		'''
-		get_path, check_path = tee(os.walk(self.options.path[0]))
+		get_path, check_path = itertools.tee(os.walk(self.options.path[0]))
 
 		if not sum(1 for _ in check_path):
 			self.LOG_INFO('fail', 'Directory invalid or specified files not found!')

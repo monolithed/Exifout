@@ -38,7 +38,7 @@ parser.add_argument(
 	#'-o',
 	dest     = 'options',
 	nargs    = '+',
-	default  =  ['s4 c0'],
+	default  =  [''],
 	help     = 'PNGOUT options.'
 	           'For example: --options c6 s4 r1'
 )
