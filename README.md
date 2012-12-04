@@ -47,8 +47,10 @@ Darvin
 
 ## Links
 
-[Alexander Guinness] (Linux/BSD/Mac OS X ports of Ken Silverman's Utilities)
-[Alexander Guinness] (http://advsys.net/ken/utils.htm)
+[PNGOUT Tutorial] (http://advsys.net/ken/util/pngout.htm)
+[Linux/BSD/Mac OS X ports of Ken Silverman's Utilities] (http://www.jonof.id.au/kenutils)
+[Ken Silverman's Utility Page] (http://advsys.net/ken/utils.htm)
+
 
 
 ##.
